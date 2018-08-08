@@ -39,7 +39,7 @@ public class MainActivity extends WearableActivity {
     private Button startBtn;
     private Button storeBtn;
 
-    private String header = "seconds, ax, ay, az, amag, lax, lay, laz, lamag, gyrox, gyroy, gyroz, rotaionx, rotaiony, rotaionz \\r\\n";
+    private String header = "seconds, ax, ay, az, amag, lax, lay, laz, lamag, gyrox, gyroy, gyroz, rotaionx, rotaiony, rotaionz \r\n";
     private String data;
     private int counter;
     private int numOfSamples;
@@ -80,11 +80,13 @@ public class MainActivity extends WearableActivity {
                 recordingEnable = true;
                 data = header;
                 counter = 0;
-                numOfSamples = Integer.parseInt(numOfSamplesEditText.getText().toString());
+                //numOfSamples = Integer.parseInt(numOfSamplesEditText.getText().toString());
+                numOfSamples = 100;
                 prevRecordTime = System.currentTimeMillis();
                 prevListenerTime = System.currentTimeMillis();
                 storeBtn.setVisibility(View.VISIBLE);
-                fileName = fileNameEditText.getText().toString();
+                //fileName = fileNameEditText.getText().toString();
+                fileName = "a";
             }
         });
 
@@ -92,7 +94,8 @@ public class MainActivity extends WearableActivity {
             @Override
             public void onClick(View v) {
                 storeBtn.setVisibility(View.INVISIBLE);
-                String url = "http://" + serverIpEditText.getText().toString() + ":8081/store";
+                //String url = "http://" + serverIpEditText.getText().toString() + ":8081/store";
+                String url = "http://192.168.2.104:8081/store";
                 JSONObject jsonObj = new JSONObject();
                 try {
                     jsonObj.put("fileName", fileName);
@@ -175,9 +178,10 @@ public class MainActivity extends WearableActivity {
                     String record = (10*counter) + ",  " + ax +",  " + ay + ",   " + az + "  ,  " + getMagnitude(ax,ay,az);
                     record += ",  " + lax + ",  " + lay + ",   " + laz + "  ,  " + getMagnitude(lax,lay,laz);
                     record += ",  " + gyrox + "  ,  " + gyroy + " ,   " + gyroz;
-                    record += ",  " + curAngleX +"  ,  " + curAngleY + " ,   " + curAngleZ + "\\r\\n";
+                    record += ",  " + curAngleX +"  ,  " + curAngleY + " ,   " + curAngleZ + "\r\n";
                     data = data + record;
                     prevRecordTime = System.currentTimeMillis();
+                    counter++;
                 }
             }
         };
